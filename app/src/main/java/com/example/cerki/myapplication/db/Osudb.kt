@@ -1,3 +1,10 @@
+package com.example.cerki.myapplication.db
+
+import android.database.Cursor
+
+/**
+ * Created by cerki on 15-Nov-17.
+ */
 package com.example.cerki.myapplication.db;
 
 import android.content.ContentValues;

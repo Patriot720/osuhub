@@ -37,10 +37,10 @@ public class PlayersTopListAdapterTest {
     public void get_view_test(){
         addFakePlayersToAdapter();
         View view = mAdapter.getView(0, null, null);
-        TextView pp = (TextView) view.findViewById(R.id.item_pp);
-        TextView acc = (TextView) view.findViewById(R.id.item_acc);
-        TextView rank = (TextView) view.findViewById(R.id.item_rank);
-        TextView username = (TextView) view.findViewById(R.id.item_username);
+        TextView pp = view.findViewById(R.id.item_pp);
+        TextView acc = view.findViewById(R.id.item_acc);
+        TextView rank = view.findViewById(R.id.item_rank);
+        TextView username = view.findViewById(R.id.item_username);
         assertNotEquals(DEFAULT_PP,pp.getText());
         assertNotEquals(DEFAULT_ACC,acc.getText());
         assertNotEquals(DEFAULT_RANK,rank.getText());
@@ -49,7 +49,7 @@ public class PlayersTopListAdapterTest {
 
     private void addFakePlayersToAdapter() {
         for (int i = 0; i < 100; i++) {
-            Player p = new Player("c","fr",i+2,i, (float) 3.4);
+            Player p = new Player();
             mAdapter.add(p);
         }
     }

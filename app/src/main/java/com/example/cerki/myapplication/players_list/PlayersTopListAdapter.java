@@ -37,21 +37,21 @@ class PlayersTopListAdapter extends ArrayAdapter<Player> {
         }
         Player p = getItem(position);
         if(p != null) {
-            TextView pp = (TextView) convertView.findViewById(R.id.item_pp);
-            TextView acc = (TextView) convertView.findViewById(R.id.item_acc);
-            TextView rank = (TextView) convertView.findViewById(R.id.item_rank);
-            TextView username = (TextView) convertView.findViewById(R.id.item_username);
+            TextView pp = convertView.findViewById(R.id.item_pp);
+            TextView acc = convertView.findViewById(R.id.item_acc);
+            TextView rank = convertView.findViewById(R.id.item_rank);
+            TextView username = convertView.findViewById(R.id.item_username);
             if (username != null){
                 username.setText(p.getUsername());
             }
             if (pp != null) {
-                pp.setText(p.getPpString());
+                pp.setText(p.getAsString(Player.COLUMN_PP));
             }
             if (acc != null){
-                acc.setText(p.getAccString());
+                acc.setText(p.getAsString(Player.COLUMN_ACC));
             }
             if (rank != null){
-                rank.setText(p.getRankString());
+                rank.setText(p.getAsString(Player.COLUMN_RANK));
             }
         }
         return convertView;

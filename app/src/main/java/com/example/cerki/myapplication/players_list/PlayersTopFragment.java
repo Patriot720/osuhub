@@ -25,8 +25,8 @@ public class PlayersTopFragment extends Fragment {
     }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.players_top_layout, container, false);;
-        ListView list = (ListView) view.findViewById(R.id.players_top);
+        View view = inflater.inflate(R.layout.players_top_layout, container, false);
+        ListView list = view.findViewById(R.id.players_top);
         mAdapter = new PlayersTopListAdapter(getActivity().getApplicationContext(),R.layout.players_top_item);
         list.setAdapter(mAdapter);
         setListOnRefreshListener(view);
@@ -34,7 +34,7 @@ public class PlayersTopFragment extends Fragment {
     }
 
     private void setListOnRefreshListener(View view) {
-        final SwipeRefreshLayout refresh = (SwipeRefreshLayout) view.findViewById(R.id.players_top_refresh);
+        final SwipeRefreshLayout refresh = view.findViewById(R.id.players_top_refresh);
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

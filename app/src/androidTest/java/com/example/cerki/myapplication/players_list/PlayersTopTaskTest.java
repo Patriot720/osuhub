@@ -20,26 +20,5 @@ import static org.junit.Assert.*;
 @RunWith(AndroidJUnit4.class)
 public class PlayersTopTaskTest {
 
-    private PlayersTopTask mTask;
-
-    private void assertPlayer(Player player) {
-        assertTrue(player.getAcc() > 0);
-        assertTrue(player.getPp() > 0);
-        assertTrue(player.getRank() > 0);
-        assertTrue(player.getId() > 0);
-    }
-    
-    @Before
-    public void setUp() throws Exception {
-        mTask = new PlayersTopTask(getTargetContext());
-    }
-
-    @Test
-    public void test_parsing() throws Exception {
-        List<Player> players = mTask.execute(PlayersTopFragment.REQUEST_URL).get();
-        Player player = players.get(0);
-        assertPlayer(player);
-    }
-
 
 }

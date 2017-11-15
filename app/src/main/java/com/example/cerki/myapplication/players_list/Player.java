@@ -1,147 +1,112 @@
 package com.example.cerki.myapplication.players_list;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 
-import static com.example.cerki.myapplication.db.Osudb.COLUMN_ACC;
-import static com.example.cerki.myapplication.db.Osudb.COLUMN_COUNTRY;
-import static com.example.cerki.myapplication.db.Osudb.COLUMN_ID;
-import static com.example.cerki.myapplication.db.Osudb.COLUMN_PC;
-import static com.example.cerki.myapplication.db.Osudb.COLUMN_PP;
-import static com.example.cerki.myapplication.db.Osudb.COLUMN_RANK;
-import static com.example.cerki.myapplication.db.Osudb.COLUMN_USERNAME;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
+
 
 /**
  * Created by cerki on 08-Nov-17.
  */
 
 public class Player {
-    private int rank;
-    private String country;
-    private int pp;
-    private float acc;
     private String username;
-    private String ppString;
     private int id;
-    private ContentValues difference;
-    private int pc;
+    private HashMap<String,Double> mPlayerData;
+    public static final String COLUMN_USERNAME = "username";
+    public static final String COLUMN_PP = "pp";
+    public static final String COLUMN_ACC = "acc";
+    public static final String COLUMN_RANK = "rank";
+    public static final String COLUMN_COUNTRY = "country";
+    public static final String COLUMN_ID = "id";
+    public static final String COLUMN_PC = "pc";
+    private String country;
 
-    public Player(String username, String country, int rank, int pp, float acc, int id) {
-        this(username,country,rank,pp,acc);
-        this.id = id;
+    public Player(HashMap<String,Double> data){
+        this.mPlayerData = data;
     }
 
-    public Player(String username,String country, int rank, int pp, float acc, int id, int pc){
-        this(username,country,rank,pp,acc,id);
-        this.pc = pc;
-    }
-    public Player(String username, String country, int rank, int pp, float acc) {
-        this.username = username;
-        this.rank = rank;
-        this.acc = acc;
-        this.pp = pp;
-        this.country = country;
+    public Player(Cursor query) {
+        this();
+        int columnCount = query.getColumnCount();
+        this.id = query.getInt(0);
+        this.username = query.getString(1);
+        for(int i = 2; i < columnCount;i++){
+            String columnName = query.getColumnName(i);
+            double value = query.getDouble(i);
+            this.set(columnName,value);
+        }
     }
 
-    Player() {
+    public Double get(String s){
+        return mPlayerData.get(s);
+    }
+    public String getAsString(String s){
+        Double val = mPlayerData.get(s);
+        if(val % 1 == 0){
+            return String.valueOf(val.intValue());
+        }
+        return String.valueOf(mPlayerData.get(s));
+    }
+    public void set(String key,Double val){
+        mPlayerData.put(key,val);
     }
     public ContentValues generateContentValues(){
+        Iterator<String> iterator = getKeysIterator();
         ContentValues cv = new ContentValues();
-        cv.put(COLUMN_USERNAME,username);
-        cv.put(COLUMN_PP,pp);
-        cv.put(COLUMN_RANK,rank);
-        cv.put(COLUMN_ACC,acc);
-        cv.put(COLUMN_COUNTRY,country);
         cv.put(COLUMN_ID,id);
-        cv.put(COLUMN_PC,pc);
+        while(iterator.hasNext()){
+            String s= iterator.next();
+            cv.put(s,get(s));
+        }
         return cv;
     }
-    public ContentValues getDifference() {
+
+    private Iterator<String> getKeysIterator() {
+        Set<String> strings = mPlayerData.keySet();
+        return strings.iterator();
+    }
+
+    public HashMap<String, Double> compare(Player p){
+        HashMap<String,Double> difference = new HashMap<>();
+        if(p.id != id)
+            return difference;
+        Iterator<String> iterator = getKeysIterator();
+        while(iterator.hasNext()){
+            String key = iterator.next();
+            Double diff = this.get(key) - p.get(key);
+            difference.put(key,diff);
+        }
         return difference;
     }
-
-    public void setDifference(ContentValues difference) {
-        this.difference = difference;
+    public void set(String key,String val){
+        Double value = Double.parseDouble(val.replaceAll("[^0-9.]",""));
+        mPlayerData.put(key,value);
     }
-
-    public int getId() {
-        return id;
+    public Player() {
+        mPlayerData = new HashMap<>();
     }
 
     public void setId(String id) {
-        this.id = getInt(id);
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-    public String getUsername() {
-        return username;
+        this.id = Integer.parseInt(id.replaceAll("[^0-9]",""));
     }
 
     public void setUsername(String username) {
         this.username = username;
     }
 
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
     public String getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public int getPp() {
-        return pp;
-    }
-
-    public void setRank(int rank) {
-        this.rank = rank;
-    }
-
-    public void setPp(int pp) {
-        this.pp = pp;
-    }
-    public void setPp(String pp){
-        this.pp = getInt(pp);
-    }
-
-    public float getAcc() {
-        return acc;
-    }
-
-    public void setAcc(float acc) {
-        this.acc = acc;
-    }
-    public void setAcc(String acc){
-        this.acc = Float.parseFloat(acc.replaceAll("[^0-9.]",""));
-    }
-
-    public void setRank(String rank) {
-        this.rank = getInt(rank);
-    }
-
-    public int getRank() {
-        return rank;
-    }
-
-    public String getAccString() {
-        return String.valueOf(this.acc);
-    }
-
-    public String getRankString() {
-        return String.valueOf(rank);
-    }
-
-    public String getPpString() {
-        return String.valueOf(pp);
-    }
-    private int getInt(String item){
-       return  Integer.parseInt(item.replaceAll("[^0-9]",""));
-    }
-    public void setPc(String pc){
-        this.pc = getInt(pc);
-    }
-    public int getPc() {
-        return pc;
+    public String getUsername() {
+        return username;
     }
 }

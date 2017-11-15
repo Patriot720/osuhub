@@ -12,39 +12,40 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="100dp"
+            android:layout_width="40dp"
+            android:layout_height="14dp"
+            android:text="@string/rank_title"
+            android:textAlignment="center"
+            android:textSize="10sp" />
+
+        <TextView
+            android:layout_width="120dp"
             android:layout_height="14dp"
             android:text="@string/username_title"
             android:textAlignment="center"
             android:textSize="10sp" />
 
         <TextView
-            android:layout_width="60dp"
+            android:layout_width="65dp"
             android:layout_height="14dp"
             android:text="@string/pp_title"
             android:textAlignment="center"
             android:textSize="10sp" />
 
         <TextView
-            android:layout_width="60dp"
+            android:layout_width="65dp"
             android:layout_height="14dp"
             android:text="@string/acc_title"
             android:textAlignment="center"
             android:textSize="10sp" />
 
         <TextView
-            android:layout_width="60dp"
+            android:layout_width="match_parent"
             android:layout_height="14dp"
             android:text="@string/pc_title"
             android:textAlignment="center"
             android:textSize="10sp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="14dp"
-            android:text="@string/rank_title"
-            android:textAlignment="center"
-            android:textSize="10sp" />
     </LinearLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -64,9 +65,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <View
+            android:layout_width="40dp"
+            android:layout_height="match_parent"/>
 
         <View
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_height="match_parent"
             android:alpha="0.25"
             android:background="#77687a"
@@ -74,18 +78,18 @@
             tools:layout_editor_absoluteY="0dp" />
 
         <View
-            android:layout_width="60dp"
+            android:layout_width="65dp"
             android:layout_height="match_parent" />
 
         <View
-            android:layout_width="60dp"
+            android:layout_width="65dp"
             android:layout_height="match_parent"
             android:alpha=".25"
             android:background="#77687a"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <View
-            android:layout_width="60dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
         <View

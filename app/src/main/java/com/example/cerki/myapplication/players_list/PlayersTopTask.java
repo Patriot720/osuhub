@@ -66,11 +66,12 @@ class PlayersTopTask extends AsyncTask<String,Void,List<Player>> {
             String country_tmp = tr.children().get(1).select("span").attr("style");
             String country = country_tmp.substring(country_tmp.indexOf("'") + 1,country_tmp.lastIndexOf("'"));
             String user_id = tr.select(".ranking-page-table__user-link").attr("href");
-           p.setAcc(acc);
-           p.setId(user_id);
-           p.setPp(pp);
-           p.setRank(rank);
+           p.set(Player.COLUMN_ACC,acc);
+           p.set(Player.COLUMN_PP,pp);
+           p.set(Player.COLUMN_PC,pc);
+           p.set(Player.COLUMN_RANK,rank);
            p.setUsername(username);
+           p.setId(user_id);
            p.setCountry(country);
            players.add(p);
         }
