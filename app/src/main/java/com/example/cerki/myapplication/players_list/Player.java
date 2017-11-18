@@ -8,9 +8,6 @@ import java.util.Iterator;
 import java.util.Set;
 
 
-/**
- * Created by cerki on 08-Nov-17.
- */
 
 public class Player {
     private String username;
@@ -34,14 +31,15 @@ public class Player {
         int columnCount = query.getColumnCount();
         this.id = query.getInt(0);
         this.username = query.getString(1);
-        for(int i = 2; i < columnCount;i++){
+        this.country = query.getString(2);
+        for(int i = 3; i < columnCount;i++){
             String columnName = query.getColumnName(i);
             double value = query.getDouble(i);
             this.set(columnName,value);
         }
     }
 
-    public Double get(String s){
+    public Double getComparable(String s){
         return mPlayerData.get(s);
     }
     public String getAsString(String s){
@@ -58,9 +56,11 @@ public class Player {
         Iterator<String> iterator = getKeysIterator();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_ID,id);
+        cv.put(COLUMN_USERNAME,username);
+        cv.put(COLUMN_COUNTRY,country);
         while(iterator.hasNext()){
             String s= iterator.next();
-            cv.put(s,get(s));
+            cv.put(s, getComparable(s));
         }
         return cv;
     }
@@ -70,14 +70,15 @@ public class Player {
         return strings.iterator();
     }
 
-    public HashMap<String, Double> compare(Player p){
+    public HashMap<String, Double> compare(Player player){
         HashMap<String,Double> difference = new HashMap<>();
-        if(p.id != id)
+        int id = player.getId();
+        if(id != this.id)
             return difference;
         Iterator<String> iterator = getKeysIterator();
         while(iterator.hasNext()){
             String key = iterator.next();
-            Double diff = this.get(key) - p.get(key);
+            Double diff = this.getComparable(key) - player.getComparable(key);
             difference.put(key,diff);
         }
         return difference;
@@ -108,5 +109,9 @@ public class Player {
 
     public String getUsername() {
         return username;
+    }
+
+    public int getId() {
+        return id;
     }
 }
