@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cerki.myapplication.R;
@@ -15,16 +16,33 @@ import org.junit.runner.RunWith;
 import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static org.junit.Assert.*;
 
-
-/**
- * Created by cerki on 08-Nov-17.
- */
+@RunWith(AndroidJUnit4.class)
 public class PlayersTopListAdapterTest {
-    private static final Context mContext = getTargetContext();
-    public static final String DEFAULT_PP = mContext.getString(R.string.default_pp);
-    public static final String DEFAULT_ACC = mContext.getString(R.string.default_acc);
-    public static final String DEFAULT_RANK = mContext.getString(R.string.default_rank);
-    public static final String DEFAULT_USERNAME = mContext.getString(R.string.default_username);
     PlayersTopListAdapter mAdapter;
+    @Before
+    public void setUp() throws Exception {
 
+        mAdapter = new PlayersTopListAdapter(getTargetContext(),R.layout.players_top_item);
+    }
+
+    @Test
+    public void test_set_difference() throws Exception {
+        TextView m = new TextView(getTargetContext());
+        ImageView arrow = new ImageView(getTargetContext());
+        arrow.setVisibility(View.INVISIBLE);
+        m.setVisibility(View.INVISIBLE);
+        mAdapter.setDiff(m,arrow, (double) 54);
+        assertEquals(m.getText(),"54");
+        assertEquals(m.getVisibility(),View.VISIBLE);
+        assertEquals(arrow.getVisibility(),View.VISIBLE);
+    }
+    @Test
+    public void test_set_difference_negative(){
+    TextView m = new TextView(getTargetContext());
+    mAdapter.setDiff(m,null, (double) -23);
+    assertEquals(m.getText(),"23");
+    }
+    public void test_set_difference_empty(){
+        mAdapter.setDiff(null,null,null);
+    }
 }

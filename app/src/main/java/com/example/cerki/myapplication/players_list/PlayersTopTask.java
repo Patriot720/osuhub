@@ -3,22 +3,29 @@ package com.example.cerki.myapplication.players_list;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.system.Os;
 import android.widget.ArrayAdapter;
+
+import com.example.cerki.myapplication.db.Osudb;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import static com.example.cerki.myapplication.players_list.PlayerParser.parse;
 
 
 class PlayersTopTask extends AsyncTask<String,Void,List<Player>> {
     private SwipeRefreshLayout mRefresh;
     private ArrayAdapter mAdapter;
-
+    private Osudb osuDb;
     public PlayersTopTask(Context context, ArrayAdapter adapter, SwipeRefreshLayout refresh) {
+        osuDb = new Osudb(context);
        mAdapter = adapter;
        mRefresh = refresh;
     }
@@ -34,11 +41,22 @@ class PlayersTopTask extends AsyncTask<String,Void,List<Player>> {
 
     @Override
     protected List<Player> doInBackground(String... strings) {
-        List<Player> players;
         String url = strings[0];
         try {
             Document doc = Jsoup.connect(url).get();
-            players  = parse(doc);
+            Elements tbody = doc.select("tbody").first().children();
+            ArrayList<Player> players = new ArrayList<>();
+            for(int i = 0; i < tbody.size();i++){
+                Element tr = tbody.get(i);
+                Player player = PlayerParser.parsePlayer(tr);
+                HashMap<String, Double> compare = osuDb.compare(player);
+                player.setPlayerDifference(compare);
+                osuDb.insertPlayer(player);
+                if(!compare.isEmpty())
+                    players.add(0,player);
+                else
+                    players.add(player);
+            }
             return players;
         } catch (IOException e) {
             e.printStackTrace();
@@ -51,6 +69,7 @@ class PlayersTopTask extends AsyncTask<String,Void,List<Player>> {
     @Override
     protected void onPostExecute(List<Player> players) {
         if((mAdapter != null) && (mRefresh != null)) {
+            mAdapter.clear();
             mAdapter.addAll(players);
             mRefresh.setRefreshing(false);
         }

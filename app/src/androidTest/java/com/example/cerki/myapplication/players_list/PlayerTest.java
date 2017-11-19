@@ -23,6 +23,16 @@ public class PlayerTest {
     }
 
     @Test
+    public void test_getAsString_with_empty_val(){
+        String val = new Player().getAsString("pp");
+        assertEquals("",val);
+    }
+    @Test
+    public void test_getAsString(){
+        String pp = mPlayer.getAsString("pp");
+        assertEquals("1000",pp);
+    }
+    @Test
     public void set() throws Exception {
         mPlayer.set("pp", (double) 24);
         assertEquals(24,mPlayer.getComparable("pp"),0);
@@ -37,6 +47,12 @@ public class PlayerTest {
         assertEquals(1000, (Double) values.get("rank"),0);
         assertEquals("username",values.get("username"));
     }
+    @Test
+    public void generateContentValuesWithEmptyPlayer(){
+        ContentValues values = new Player().generateContentValues();
+        assertNull(values.get("username"));
+        assertNull(values.get("Keepo"));
+    }
 
     @Test
     public void compare() throws Exception {
@@ -48,6 +64,24 @@ public class PlayerTest {
             assertEquals((double)1000, val,0);
         }
 
+
+    }
+    @Test
+    public void compare_with_empty_player() {
+        Player fakePlayer = getFakePlayer();
+        Player fakePlayer1 = new Player();
+        fakePlayer1.setId("25");
+        HashMap<String, Double> comparison = fakePlayer.compare(fakePlayer1);
+        assertNull(comparison.get("pp"));
+        assertNull(comparison.get("acc"));
+    }
+    @Test
+    public void compare_with_same_numbers(){
+        Player p1 = getFakePlayer();
+        Player p2 = getFakePlayer();
+        HashMap<String,Double> comparison = p1.compare(p2);
+        assertNull(comparison.get("pp"));
+        assertNull(comparison.get("acc"));
     }
 
     @Test

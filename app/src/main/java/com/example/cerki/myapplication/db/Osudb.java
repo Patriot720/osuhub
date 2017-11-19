@@ -44,7 +44,7 @@ public class Osudb extends SQLiteOpenHelper{
     }
     public void insertPlayer(Player p){
         ContentValues cv = p.generateContentValues();
-       getWritableDatabase().insertOrThrow(Osudb.PLAYERS_TABLE_NAME,null,cv);
+       getWritableDatabase().replaceOrThrow(Osudb.PLAYERS_TABLE_NAME,null,cv);
 
     }
     public Player getPlayer(Player player){
@@ -56,6 +56,8 @@ public class Osudb extends SQLiteOpenHelper{
     }
     public HashMap<String,Double> compare(Player player) {
         Player p = getPlayer(player);
+        if(p == null)
+            return new HashMap<>();
         return player.compare(p);
     }
 }

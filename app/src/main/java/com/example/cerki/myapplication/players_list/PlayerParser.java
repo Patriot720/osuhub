@@ -9,12 +9,10 @@ import java.util.List;
 
 
 public class PlayerParser {
-    static public List<Player> parse(Document doc){
-        ArrayList<Player> players = new ArrayList<>();
-        Elements tbody = doc.select("tbody").first().children();
-        for (int i = 0; i < tbody.size(); i++) {
+    static public Player parsePlayer(Element tr){
+            if(tr == null)
+                return null;
             Player p = new Player();
-            Element tr = tbody.get(i);
             String username = tr.select("span").text();
             String rank = tr.children().first().text();
             String acc = tr.children().get(2).text();
@@ -26,12 +24,10 @@ public class PlayerParser {
            p.set(Player.COLUMN_ACC,acc);
            p.set(Player.COLUMN_PP,pp);
            p.set(Player.COLUMN_PC,pc);
-           p.set(Player.COLUMN_RANK,rank);
+           p.set(Player.COLUMN_RANK,-Double.parseDouble(rank.replaceAll("[^0-9]","")));
            p.setUsername(username);
            p.setId(user_id);
            p.setCountry(country);
-           players.add(p);
-        }
-        return players;
+           return p;
     }
 }
