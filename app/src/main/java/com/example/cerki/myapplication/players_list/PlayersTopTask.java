@@ -3,7 +3,6 @@ package com.example.cerki.myapplication.players_list;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.system.Os;
 import android.widget.ArrayAdapter;
 
 import com.example.cerki.myapplication.db.Osudb;
@@ -51,6 +50,7 @@ class PlayersTopTask extends AsyncTask<String,Void,List<Player>> {
                 Player player = PlayerParser.parsePlayer(tr);
                 HashMap<String, PlayerDataEntry> compare = osuDb.compare(player);
                 player.difference = compare;
+                //K
                 osuDb.insertPlayer(player);
                 if(!compare.isEmpty())
                     players.add(0,player);
