@@ -6,11 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.cerki.myapplication.players_list.Columns;
 import com.example.cerki.myapplication.players_list.Player;
+import com.example.cerki.myapplication.players_list.PlayerDataEntry;
 
 import java.util.HashMap;
 
-import static com.example.cerki.myapplication.players_list.Player.*;
 
 
 public class Osudb extends SQLiteOpenHelper{
@@ -19,13 +20,13 @@ public class Osudb extends SQLiteOpenHelper{
 
 
     public static final String PLAYERS_TABLE_CREATE = "CREATE TABLE " + PLAYERS_TABLE_NAME + "("
-            + COLUMN_ID + " NUMBER PRIMARY KEY,"
-            + COLUMN_USERNAME + " TEXT,"
-            + COLUMN_COUNTRY + " TEXT,"
-            + COLUMN_PP + " NUMBER,"
-            + COLUMN_PC + " NUMBER,"
-            + COLUMN_ACC +  " FLOAT,"
-            + COLUMN_RANK + " NUMBER)";
+            + Columns.ID + " NUMBER PRIMARY KEY,"
+            + Columns.USERNAME + " TEXT,"
+            + Columns.COUNTRY + " TEXT,"
+            + Columns.PP + " NUMBER,"
+            + Columns.PC + " NUMBER,"
+            + Columns.ACC +  " FLOAT,"
+            + Columns.RANK + " NUMBER)";
     static final String DATABASE_NAME = "Osudb";
     public static final int DATABASE_VERSION = 1;
 
@@ -42,22 +43,21 @@ public class Osudb extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + PLAYERS_TABLE_NAME);
     }
-    public void insertPlayer(Player p){
-        ContentValues cv = p.generateContentValues();
-       getWritableDatabase().replaceOrThrow(Osudb.PLAYERS_TABLE_NAME,null,cv);
-
+    public void insertPlayer(Player player){
+        ContentValues values = player.generateContentValues();
+        getWritableDatabase().replaceOrThrow(PLAYERS_TABLE_NAME,null,values);
     }
     public Player getPlayer(Player player){
-        String selection = COLUMN_ID + "=" + player.getId();
+        String selection = Columns.ID + "=" + player.getId();
         Cursor query = getReadableDatabase().query(PLAYERS_TABLE_NAME, null, selection, null, null, null, null);
         if(!query.moveToFirst())
             return null;
         return new Player(query);
     }
-    public HashMap<String,Double> compare(Player player) {
+    public HashMap<String,PlayerDataEntry> compare(Player player) {
         Player p = getPlayer(player);
         if(p == null)
             return new HashMap<>();
-        return player.compare(p);
+        return player.data.compare(p.data);
     }
 }

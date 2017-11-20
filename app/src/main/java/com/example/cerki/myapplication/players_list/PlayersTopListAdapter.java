@@ -49,25 +49,25 @@ class PlayersTopListAdapter extends ArrayAdapter<Player> {
             ImageView pc_arrow = convertView.findViewById(R.id.item_pc_arrow);
 
             if (username != null){
-                username.setText(p.getUsername());
+                username.setText(p.get(Columns.USERNAME));
             }
             if (pp != null) {
-                pp.setText(p.getAsString(Player.COLUMN_PP));
+                pp.setText(p.get(Columns.PP));
             }
             if(pc != null){
-                pc.setText(p.getAsString(Player.COLUMN_PC));
+                pc.setText(p.get(Columns.PC));
             }
             if (acc != null){
-                acc.setText(p.getAsString(Player.COLUMN_ACC));
+                acc.setText(p.get(Columns.ACC));
             }
             if (rank != null){
-                rank.setText(p.getAsString(Player.COLUMN_RANK).substring(1));
+                rank.setText(p.get(Columns.RANK));
             }
-           if(p.getPlayerDifference() != null) {
-               Double pp_diff = p.getPlayerDifference("pp");
-               Double acc_diff = p.getPlayerDifference("acc");
-               Double rank_diff = p.getPlayerDifference("rank");
-               Double pc_diff = p.getPlayerDifference("pc");
+           if(p.difference != null) {
+               PlayerDataEntry pp_diff = p.difference.get("pp");
+               PlayerDataEntry acc_diff = p.difference.get("acc");
+               PlayerDataEntry rank_diff = p.difference.get("rank");
+               PlayerDataEntry pc_diff = p.difference.get("pc");
               setDiff(pp_diff_view,pp_arrow,pp_diff);
               setDiff(acc_diff_view,acc_arrow,acc_diff);
               setDiff(rank_diff_view,rank_arrow,rank_diff);
@@ -77,7 +77,7 @@ class PlayersTopListAdapter extends ArrayAdapter<Player> {
         return convertView;
     }
 
-    public void setDiff(TextView m, ImageView arrow, Double i) {
+    public void setDiff(TextView m, ImageView arrow, PlayerDataEntry i) {
         if(i == null) {
             if(m !=null)
             m.setVisibility(View.GONE);
@@ -87,17 +87,13 @@ class PlayersTopListAdapter extends ArrayAdapter<Player> {
         }
         if(arrow != null) {
             arrow.setVisibility(View.VISIBLE);
-            if (i > 0)
+            if (i.isPositive())
                 arrow.setImageResource(R.drawable.arrow_up);
             else
                 arrow.setImageResource(R.drawable.arrow_down);
         }
         if(m != null) {
-            i = Math.abs(i);
-            if(i%1==0)
-                m.setText(String.valueOf(i.intValue()));
-            else
-                m.setText(String.format(Locale.getDefault(),"%.2f",i));
+            m.setText(i.getAbsString());
             m.setVisibility(View.VISIBLE);
         }
 

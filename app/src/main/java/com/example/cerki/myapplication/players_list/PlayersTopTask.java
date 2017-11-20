@@ -49,8 +49,8 @@ class PlayersTopTask extends AsyncTask<String,Void,List<Player>> {
             for(int i = 0; i < tbody.size();i++){
                 Element tr = tbody.get(i);
                 Player player = PlayerParser.parsePlayer(tr);
-                HashMap<String, Double> compare = osuDb.compare(player);
-                player.setPlayerDifference(compare);
+                HashMap<String, PlayerDataEntry> compare = osuDb.compare(player);
+                player.difference = compare;
                 osuDb.insertPlayer(player);
                 if(!compare.isEmpty())
                     players.add(0,player);

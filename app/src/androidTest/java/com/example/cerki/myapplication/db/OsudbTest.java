@@ -3,7 +3,9 @@ package com.example.cerki.myapplication.db;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.cerki.myapplication.TestHelper;
+import com.example.cerki.myapplication.players_list.Columns;
 import com.example.cerki.myapplication.players_list.Player;
+import com.example.cerki.myapplication.players_list.PlayerDataEntry;
 
 import org.junit.After;
 import org.junit.Before;
@@ -14,9 +16,6 @@ import java.util.HashMap;
 import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static org.junit.Assert.*;
 
-/**
- * Created by cerki on 12-Nov-17.
- */
 public class OsudbTest {
     private SQLiteDatabase mDb;
     private Osudb osuDb;
@@ -36,8 +35,8 @@ public class OsudbTest {
         Player player = TestHelper.getFakePlayer(2);
         osuDb.insertPlayer(player);
         Player osuDbPlayer = osuDb.getPlayer(player);
-        assertEquals(osuDbPlayer.getUsername(),"username");
-        assertEquals(osuDbPlayer.get("pp"),2000,0);
+        assertEquals(osuDbPlayer.get(Columns.USERNAME),"username");
+        assertEquals(osuDbPlayer.getDataEntry(Columns.PP).getIntVal(),2000);
 
     }
     @Test
@@ -50,29 +49,30 @@ public class OsudbTest {
         osuDb.insertPlayer(fakePlayer1);
         Player p = osuDb.getPlayer(fakePlayer);
         Player p2 = osuDb.getPlayer(fakePlayer1);
-        assertEquals(2000,p2.get("pp"),0);
-        assertEquals(2000,p2.get("acc"),0);
-        assertEquals(1000,p.get("pp"),0);
-        assertEquals(1000,p.get("rank"),0);
+        assertEquals("2000",p2.get(Columns.PP));
+        assertEquals("2000",p2.get(Columns.ACC));
+        assertEquals("1000",p.get(Columns.PP));
+        assertEquals("1000",p.get(Columns.ACC));
+
     }
     @Test
     public void test_player_insertion() throws Exception {
        Player fakePlayer = TestHelper.getFakePlayer();
        osuDb.insertPlayer(fakePlayer);
        Player p = osuDb.getPlayer(fakePlayer);
-       assertEquals(1000,p.getComparable("pp"),0);
-       assertEquals(1000,p.getComparable("acc"),0);
-       assertEquals("username",p.getUsername());
+       assertEquals(1000,p.getDataEntry("pp").getIntVal());
+       assertEquals(1000,p.getDataEntry("acc").getIntVal());
+       assertEquals("username",p.get("username"));
        assertEquals(1,p.getId());
     }
     @Test
     public void test_get_method_with_empty_player(){
-        Player player = osuDb.getPlayer(new Player());
+        Player player = osuDb.getPlayer(new Player(0));
         assertEquals(null,player);
     }
     @Test
     public  void test_compare_with_empty_player(){
-        HashMap<String,Double> hashMap = osuDb.compare(new Player());
+        HashMap<String, PlayerDataEntry> hashMap = osuDb.compare(new Player(0));
         assertTrue(hashMap.isEmpty());
     }
 
@@ -86,12 +86,10 @@ public class OsudbTest {
         Player fakePlayer1 = TestHelper.getFakePlayer();
         Player fakePlayer2 = TestHelper.getFakePlayer(2);
         osuDb.insertPlayer(fakePlayer1);
-        HashMap<String, Double> comparison = osuDb.compare(fakePlayer2);
-        assertEquals(1000,comparison.get("pp"),0);
-        assertEquals(1000,comparison.get("acc"),0);
-        assertEquals(1000,comparison.get("rank"),0);
-
-
+        HashMap<String, PlayerDataEntry> comparison = osuDb.compare(fakePlayer2);
+        assertEquals("1000",comparison.get("pp").getAsString());
+        assertEquals("1000",comparison.get("acc").getAsString());
+        assertEquals("1000",comparison.get("rank").getAsString());
     }
 
 

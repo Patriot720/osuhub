@@ -31,7 +31,7 @@ public class PlayersTopListAdapterTest {
         ImageView arrow = new ImageView(getTargetContext());
         arrow.setVisibility(View.INVISIBLE);
         m.setVisibility(View.INVISIBLE);
-        mAdapter.setDiff(m,arrow, (double) 54);
+        mAdapter.setDiff(m,arrow, new PlayerDataEntry(54));
         assertEquals(m.getText(),"54");
         assertEquals(m.getVisibility(),View.VISIBLE);
         assertEquals(arrow.getVisibility(),View.VISIBLE);
@@ -39,7 +39,7 @@ public class PlayersTopListAdapterTest {
     @Test
     public void test_set_difference_negative(){
     TextView m = new TextView(getTargetContext());
-    mAdapter.setDiff(m,null, (double) -23);
+    mAdapter.setDiff(m,null, new PlayerDataEntry(-23));
     assertEquals(m.getText(),"23");
     }
     public void test_set_difference_empty(){

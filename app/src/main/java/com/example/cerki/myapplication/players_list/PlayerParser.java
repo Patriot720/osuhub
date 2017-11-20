@@ -12,7 +12,8 @@ public class PlayerParser {
     static public Player parsePlayer(Element tr){
             if(tr == null)
                 return null;
-            Player p = new Player();
+            String user_id = tr.select(".ranking-page-table__user-link").attr("href");
+            Player p = new Player(user_id);
             String username = tr.select("span").text();
             String rank = tr.children().first().text();
             String acc = tr.children().get(2).text();
@@ -20,14 +21,12 @@ public class PlayerParser {
             String pp = tr.children().get(4).text();
             String country_tmp = tr.children().get(1).select("span").attr("style");
             String country = country_tmp.substring(country_tmp.indexOf("'") + 1,country_tmp.lastIndexOf("'"));
-            String user_id = tr.select(".ranking-page-table__user-link").attr("href");
-           p.set(Player.COLUMN_ACC,acc);
-           p.set(Player.COLUMN_PP,pp);
-           p.set(Player.COLUMN_PC,pc);
-           p.set(Player.COLUMN_RANK,-Double.parseDouble(rank.replaceAll("[^0-9]","")));
-           p.setUsername(username);
-           p.setId(user_id);
-           p.setCountry(country);
+           p.set(Columns.ACC,new PlayerDataEntry(acc));
+           p.set(Columns.PP,new PlayerDataEntry(pp));
+           p.set(Columns.PC,new PlayerDataEntry(pc));
+           p.set(Columns.RANK,new PlayerDataEntry('-' + rank.substring(1)));
+           p.set(Columns.USERNAME,username);
+           p.set(Columns.COUNTRY,country);
            return p;
     }
 }

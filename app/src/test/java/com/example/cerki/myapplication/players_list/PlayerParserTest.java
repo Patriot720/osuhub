@@ -32,12 +32,13 @@ public class PlayerParserTest {
         Elements tbody = doc.select("tbody").first().children();
         Element tr = tbody.get(0);
         Player player = PlayerParser.parsePlayer(tr);
-        assertEquals("Cookiezi",player.getUsername());
+        assertEquals("Cookiezi",player.get("username"));
+        assertTrue(player.getDataEntry("pp").getIntVal() > 0);
+        assertTrue(player.getDataEntry("acc").getDoubleVal() > 0);
     }
     @Test
     public void test_parse_empty() throws Exception{
-        Element tr = null;
-        Player player = PlayerParser.parsePlayer(tr);
+        Player player = PlayerParser.parsePlayer(null);
         assertEquals(null,player);
     }
 }

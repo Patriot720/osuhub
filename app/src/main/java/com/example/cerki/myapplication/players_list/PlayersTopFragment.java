@@ -13,9 +13,6 @@ import android.widget.ListView;
 
 import com.example.cerki.myapplication.R;
 
-/**
- * Created by cerki on 08-Nov-17.
- */
 
 public class PlayersTopFragment extends Fragment {
     public static final String REQUEST_URL = "https://osu.ppy.sh/rankings/osu/performance";
@@ -38,7 +35,8 @@ public class PlayersTopFragment extends Fragment {
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new PlayersTopTask(getActivity().getApplicationContext(),mAdapter,refresh).execute(REQUEST_URL);
+                PlayersTopTask playersTopTask = new PlayersTopTask(getActivity().getApplicationContext(), mAdapter, refresh);
+                playersTopTask.execute(REQUEST_URL);
             }
         });
     }
