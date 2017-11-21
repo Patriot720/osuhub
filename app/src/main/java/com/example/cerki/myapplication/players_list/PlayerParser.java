@@ -1,11 +1,6 @@
 package com.example.cerki.myapplication.players_list;
 
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class PlayerParser {
@@ -21,6 +16,10 @@ public class PlayerParser {
             String pp = tr.children().get(4).text();
             String country_tmp = tr.children().get(1).select("span").attr("style");
             String country = country_tmp.substring(country_tmp.indexOf("'") + 1,country_tmp.lastIndexOf("'"));
+            country = country.substring(1);
+            country = country.substring(country.indexOf("/"));
+            country = country.toLowerCase();
+            country = country.substring(1);
            p.set(Columns.ACC,new PlayerDataEntry(acc));
            p.set(Columns.PP,new PlayerDataEntry(pp));
            p.set(Columns.PC,new PlayerDataEntry(pc));

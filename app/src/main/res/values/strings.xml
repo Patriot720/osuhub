@@ -13,7 +13,7 @@
     <string name="username_title">username</string>
     <string name="rank_title">rank</string>
     <string name="acc_title">accuracy</string>
-    <string name="pp_title" >performance</string>
+    <string name="pp_title">pp</string>
     <string name="default_pc">214000</string>
     <string name="pc_title">playcount</string>
 </resources>

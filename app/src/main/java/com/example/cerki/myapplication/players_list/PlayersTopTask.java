@@ -3,7 +3,6 @@ package com.example.cerki.myapplication.players_list;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.widget.ArrayAdapter;
 
 import com.example.cerki.myapplication.db.Osudb;
 
@@ -21,21 +20,12 @@ import java.util.List;
 
 class PlayersTopTask extends AsyncTask<String,Void,List<Player>> {
     private SwipeRefreshLayout mRefresh;
-    private ArrayAdapter mAdapter;
+    private PlayersTopListAdapter mAdapter;
     private Osudb osuDb;
-    public PlayersTopTask(Context context, ArrayAdapter adapter, SwipeRefreshLayout refresh) {
+    public PlayersTopTask(Context context, PlayersTopListAdapter adapter, SwipeRefreshLayout refresh) {
         osuDb = new Osudb(context);
        mAdapter = adapter;
        mRefresh = refresh;
-    }
-    public PlayersTopTask(Context context, ArrayAdapter adapter){
-        mAdapter = adapter;
-    }
-    public PlayersTopTask(ArrayAdapter mAdapter) {
-        this.mAdapter = mAdapter;
-    }
-
-    public PlayersTopTask(Context targetContext) {
     }
 
     @Override
@@ -52,7 +42,7 @@ class PlayersTopTask extends AsyncTask<String,Void,List<Player>> {
                 player.difference = compare;
                 //K
                 osuDb.insertPlayer(player);
-                if(!compare.isEmpty())
+                if(!compare.isEmpty() && compare.get(Columns.PP) != null)
                     players.add(0,player);
                 else
                     players.add(player);

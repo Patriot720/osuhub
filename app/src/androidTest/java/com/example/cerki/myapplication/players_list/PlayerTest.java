@@ -23,12 +23,12 @@ public class PlayerTest {
     }
 
     @Test
-    public void test_getAsString_with_empty_val(){
+    public void getAsStringWithEmptyValue(){
         String val = new Player(0).get("pp");
         assertEquals("",val);
     }
     @Test
-    public void test_getAsString(){
+    public void getAsString(){
         String pp = mPlayer.get("pp");
         assertEquals("1000",pp);
     }
@@ -51,7 +51,9 @@ public class PlayerTest {
     public void generateContentValuesWithEmptyPlayer(){
         ContentValues values = new Player(0).generateContentValues();
         assertNull(values.get("username"));
+        assertEquals(0,values.get(Columns.ID));
         assertNull(values.get("Keepo"));
+        assertNull(values.get(Columns.PP));
     }
 
     @Test
@@ -67,7 +69,7 @@ public class PlayerTest {
 
     }
     @Test
-    public void compare_with_empty_player() {
+    public void compareWithEmptyPlayer() {
         Player fakePlayer = getFakePlayer();
         Player fakePlayer1 = new Player(0);
         fakePlayer1.setId("25");
@@ -76,7 +78,7 @@ public class PlayerTest {
         assertNull(comparison.get("acc"));
     }
     @Test
-    public void compare_with_same_numbers(){
+    public void compareWithSameNumbers(){
         Player p1 = getFakePlayer();
         Player p2 = getFakePlayer();
         HashMap<String, PlayerDataEntry> comparison = p1.data.compare(p2.data);

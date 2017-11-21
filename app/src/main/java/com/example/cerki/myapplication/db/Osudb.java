@@ -50,8 +50,10 @@ public class Osudb extends SQLiteOpenHelper{
     public Player getPlayer(Player player){
         String selection = Columns.ID + "=" + player.getId();
         Cursor query = getReadableDatabase().query(PLAYERS_TABLE_NAME, null, selection, null, null, null, null);
-        if(!query.moveToFirst())
+        if(!query.moveToFirst()) {
+            query.close();
             return null;
+        }
         return new Player(query);
     }
     public HashMap<String,PlayerDataEntry> compare(Player player) {

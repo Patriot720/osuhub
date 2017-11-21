@@ -3,7 +3,6 @@ package com.example.cerki.myapplication.players_list;
 import android.content.ContentValues;
 
 import java.util.HashMap;
-import java.util.Objects;
 import java.util.Set;
 
 

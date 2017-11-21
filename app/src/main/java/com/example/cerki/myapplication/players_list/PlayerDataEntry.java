@@ -4,7 +4,7 @@ package com.example.cerki.myapplication.players_list;
 public class PlayerDataEntry {
     private int intVal;
     private double doubleVal;
-    private boolean isFloating;
+    private final boolean isFloating;
 
     public boolean isFloating() {
         return isFloating;
@@ -60,7 +60,6 @@ public class PlayerDataEntry {
     }
     public PlayerDataEntry subtract(PlayerDataEntry entry){
         if(entry == null)return new PlayerDataEntry(0);
-        PlayerDataEntry test = entry;
         if(isFloating){
             double dval = doubleVal - entry.getDoubleVal();
             return new PlayerDataEntry(dval);

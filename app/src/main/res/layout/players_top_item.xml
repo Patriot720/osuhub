@@ -2,9 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/rect"
     android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:layout_height="70dp">
+    android:layout_height="70dp"
+    android:orientation="horizontal">
 
     <RelativeLayout
         android:id="@+id/rank"
@@ -20,7 +21,7 @@
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/item_hash"
             android:src="@mipmap/arrow_down"
-            android:visibility="gone"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/item_rank_difference"
             app:layout_constraintTop_toTopOf="parent" />
@@ -32,8 +33,9 @@
             android:layout_alignTop="@+id/item_rank"
             android:layout_toEndOf="@+id/item_rank"
             android:text="@string/default_diff"
-            android:textSize="10sp"
-            android:visibility="gone"
+            android:textColor="@color/textColorHighlight"
+            android:textSize="12sp"
+            android:visibility="invisible"
             app:layout_constraintStart_toEndOf="@+id/item_rank"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,6 +46,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="@string/default_rank"
+            android:textColor="@color/textColorHighlight"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/item_acc"
             app:layout_constraintTop_toTopOf="parent" />
@@ -54,7 +57,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toStartOf="@+id/item_rank"
-            android:text="#" />
+            android:text="#"
+            android:textColor="@color/textColorHighlight" />
 
     </RelativeLayout>
 
@@ -65,13 +69,15 @@
 
         <ImageView
             android:id="@+id/item_country_image"
-            android:layout_width="30dp"
+            android:layout_width="25dp"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
             android:layout_toStartOf="@+id/item_username"
             android:adjustViewBounds="false"
             android:alpha=".9"
             android:cropToPadding="true"
+            android:paddingEnd="5dp"
+            android:paddingStart="0dp"
             android:src="@drawable/kr"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -84,6 +90,7 @@
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical|right"
             android:text="@string/default_username"
+            android:textColor="@color/usernameColor"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/item_country_image"
@@ -116,8 +123,9 @@
             android:layout_alignEnd="@+id/item_pp"
             android:layout_below="@+id/item_pp"
             android:text="@string/default_diff"
-            android:textSize="10sp"
-            android:visibility="gone"
+            android:textColor="@color/textColor"
+            android:textSize="12sp"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -129,6 +137,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
             android:text="@string/default_pp"
+            android:textColor="@color/textColorHighlight"
             android:textSize="14sp"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="10dp" />
@@ -149,6 +158,7 @@
             android:layout_marginTop="15dp"
             android:layout_weight="1"
             android:text="@string/default_acc"
+            android:textColor="@color/textColor"
             android:textSize="14sp"
             tools:layout_editor_absoluteX="179dp"
             tools:layout_editor_absoluteY="21dp" />
@@ -161,8 +171,9 @@
             android:layout_below="@+id/item_acc"
             android:layout_weight="1"
             android:text="@string/default_diff"
-            android:textSize="10sp"
-            android:visibility="gone"
+            android:textColor="@color/textColor"
+            android:textSize="12sp"
+            android:visibility="invisible"
             app:layout_constraintTop_toBottomOf="@+id/item_acc" />
 
         <ImageView
@@ -175,12 +186,13 @@
             android:adjustViewBounds="true"
             android:cropToPadding="true"
             android:src="@mipmap/arrow_down"
-            android:visibility="gone"
+            android:visibility="invisible"
             app:layout_constraintEnd_toStartOf="@+id/item_acc_difference"
             app:layout_constraintTop_toBottomOf="@+id/item_acc" />
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/pc"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -192,6 +204,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
             android:text="@string/default_pc"
+            android:textColor="@color/textColor"
             tools:text="@string/default_pc" />
 
         <TextView
@@ -202,8 +215,9 @@
             android:layout_below="@+id/item_pc"
             android:layout_weight="1"
             android:text="@string/default_diff"
-            android:textSize="10sp"
-            android:visibility="gone"
+            android:textColor="@color/textColor"
+            android:textSize="12sp"
+            android:visibility="invisible"
             app:layout_constraintEnd_toStartOf="@+id/item_rank"
             app:layout_constraintTop_toBottomOf="@+id/item_acc" />
 
@@ -217,7 +231,7 @@
             android:adjustViewBounds="true"
             android:cropToPadding="true"
             android:src="@mipmap/arrow_down"
-            android:visibility="gone"
+            android:visibility="invisible"
             app:layout_constraintEnd_toStartOf="@+id/item_acc_difference"
             app:layout_constraintTop_toBottomOf="@+id/item_acc" />
 

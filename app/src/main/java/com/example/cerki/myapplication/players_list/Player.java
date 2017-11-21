@@ -5,16 +5,14 @@ import android.database.Cursor;
 
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Objects;
 import java.util.Set;
 
 
 public class Player {
     private int id;
-    public PlayerData data;
+    public final PlayerData data;
     public HashMap<String,PlayerDataEntry> difference;
-    public HashMap<String,String> personalInfo;
+    public final HashMap<String,String> personalInfo;
 
     public ContentValues generateContentValues(){
         ContentValues contentValues = new ContentValues();
@@ -36,6 +34,7 @@ public class Player {
             double value = query.getDouble(i);
             this.set(columnName, new PlayerDataEntry(value));
         }
+        query.close();
     }
     public Player(int id){
         this();

@@ -1,9 +1,11 @@
 package com.example.cerki.myapplication.players_list;
 
 import android.content.Context;
-import android.media.Image;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +15,15 @@ import android.widget.TextView;
 
 import com.example.cerki.myapplication.R;
 
-import org.w3c.dom.Text;
-
-import java.util.Locale;
+import java.io.IOException;
+import java.io.InputStream;
 
 
 class PlayersTopListAdapter extends ArrayAdapter<Player> {
-    int mLayoutId;
-    public PlayersTopListAdapter(@NonNull Context context, int resource) {
-        super(context, resource);
-        mLayoutId = resource;
+    final int mLayoutId;
+    public PlayersTopListAdapter(@NonNull Context context) {
+        super(context, R.layout.players_top_item);
+        mLayoutId = R.layout.players_top_item;
     }
 
     @NonNull
@@ -47,7 +48,10 @@ class PlayersTopListAdapter extends ArrayAdapter<Player> {
             ImageView acc_arrow = convertView.findViewById(R.id.item_acc_arrow);
             TextView pc_diff_view = convertView.findViewById(R.id.item_pc_difference);
             ImageView pc_arrow = convertView.findViewById(R.id.item_pc_arrow);
-
+            ImageView country = convertView.findViewById(R.id.item_country_image);
+            if(country != null){
+                setAsset(country,p.get(Columns.COUNTRY));
+            }
             if (username != null){
                 username.setText(p.get(Columns.USERNAME));
             }
@@ -77,12 +81,22 @@ class PlayersTopListAdapter extends ArrayAdapter<Player> {
         return convertView;
     }
 
+    protected void setAsset(ImageView destination,String source) {
+        try {
+            InputStream open = getContext().getAssets().open(source);
+            Bitmap bitmap = BitmapFactory.decodeStream(open);
+            destination.setImageBitmap(bitmap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void setDiff(TextView m, ImageView arrow, PlayerDataEntry i) {
         if(i == null) {
             if(m !=null)
-            m.setVisibility(View.GONE);
+            m.setVisibility(View.INVISIBLE);
             if(arrow !=null)
-            arrow.setVisibility(View.GONE);
+            arrow.setVisibility(View.INVISIBLE);
             return;
         }
         if(arrow != null) {
