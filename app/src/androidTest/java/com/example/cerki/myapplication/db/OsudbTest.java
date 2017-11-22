@@ -1,7 +1,5 @@
 package com.example.cerki.myapplication.db;
 
-import android.database.sqlite.SQLiteDatabase;
-
 import com.example.cerki.myapplication.players_list.Player;
 import com.example.cerki.myapplication.players_list.PlayerDataEntry;
 
@@ -35,8 +33,8 @@ public class OsudbTest {
     }
     @Test
     public void test_player_update() throws Exception{
-        osuDb.insertPlayer(mFakePlayer1);
-        osuDb.insertPlayer(mFakePlayer2);
+        osuDb.insertOrUpdate(mFakePlayer1);
+        osuDb.insertOrUpdate(mFakePlayer2);
         Player osuDbPlayer = osuDb.getPlayer(mFakePlayer2);
         assertPlayer(osuDbPlayer,2);
 
@@ -44,9 +42,9 @@ public class OsudbTest {
     @Test
     public void test_player_update_with_random_ids(){
         mFakePlayer1.setId("2558286");
-        osuDb.insertPlayer(mFakePlayer1);
+        osuDb.insertOrUpdate(mFakePlayer1);
         mFakePlayer2.setId("4650315");
-        osuDb.insertPlayer(mFakePlayer2);
+        osuDb.insertOrUpdate(mFakePlayer2);
         Player p = osuDb.getPlayer(mFakePlayer1);
         Player p2 = osuDb.getPlayer(mFakePlayer2);
         assertPlayer(p2,2);
@@ -54,7 +52,7 @@ public class OsudbTest {
     }
     @Test
     public void test_player_insertion() throws Exception {
-       osuDb.insertPlayer(mFakePlayer1);
+       osuDb.insertOrUpdate(mFakePlayer1);
        Player p = osuDb.getPlayer(mFakePlayer1);
        assertPlayer(p);
     }
@@ -71,7 +69,7 @@ public class OsudbTest {
 
     @Test
     public void compare_player1_from_db_to_new_player2(){
-        osuDb.insertPlayer(mFakePlayer1);
+        osuDb.insertOrUpdate(mFakePlayer1);
         HashMap<String, PlayerDataEntry> comparison = osuDb.compare(mFakePlayer2);
         assertEquals("1000",comparison.get("pp").getAsString());
         assertEquals("1000",comparison.get("acc").getAsString());

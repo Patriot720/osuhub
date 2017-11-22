@@ -16,6 +16,8 @@ import java.util.HashMap;
 
 public class Osudb extends SQLiteOpenHelper{
     public static final String PLAYERS_TABLE_NAME = "players";
+    public static Osudb osudb;
+
 
 
 
@@ -30,8 +32,21 @@ public class Osudb extends SQLiteOpenHelper{
     static final String DATABASE_NAME = "Osudb";
     public static final int DATABASE_VERSION = 1;
 
-    public Osudb(Context targetContext) {
+    protected Osudb(Context targetContext) {
             super(targetContext,DATABASE_NAME,null,DATABASE_VERSION);
+    }
+    public static Osudb getInstance(Context context){
+       if(osudb != null)
+           return osudb;
+       else{
+           osudb = new Osudb(context);
+           return osudb;
+       }
+    }
+    public static Osudb getInstance() throws InstantiationException {
+        if(osudb == null)
+            throw new InstantiationException("Not yet instantiated");
+        return osudb;
     }
 
     @Override
@@ -43,7 +58,7 @@ public class Osudb extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + PLAYERS_TABLE_NAME);
     }
-    public void insertPlayer(Player player){
+    public void insertOrUpdate(Player player){
         ContentValues values = player.generateContentValues();
         getWritableDatabase().replaceOrThrow(PLAYERS_TABLE_NAME,null,values);
     }

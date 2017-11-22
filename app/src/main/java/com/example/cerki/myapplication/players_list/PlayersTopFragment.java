@@ -27,6 +27,7 @@ public class PlayersTopFragment extends Fragment {
         list.setAdapter(mAdapter);
         View inflate = View.inflate(getActivity().getApplicationContext(),R.layout.top_list_header,null);
         list.addHeaderView(inflate);
+        list.setOnScrollListener(new EndlessScrollListener(mAdapter));
         setListOnRefreshListener(view);
         return view;
     }
@@ -36,7 +37,7 @@ public class PlayersTopFragment extends Fragment {
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                PlayersTopTask playersTopTask = new PlayersTopTask(getActivity().getApplicationContext(), mAdapter, refresh);
+                PlayersTopTask playersTopTask = new PlayersTopTask(mAdapter, refresh);
                 playersTopTask.execute(REQUEST_URL);
             }
         });

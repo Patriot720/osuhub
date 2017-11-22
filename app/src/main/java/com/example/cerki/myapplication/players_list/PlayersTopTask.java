@@ -1,8 +1,8 @@
 package com.example.cerki.myapplication.players_list;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.widget.ArrayAdapter;
 
 import com.example.cerki.myapplication.db.Osudb;
 
@@ -18,41 +18,40 @@ import java.util.List;
 
 
 
-class PlayersTopTask extends AsyncTask<String,Void,List<Player>> {
+public class PlayersTopTask extends AsyncTask<String,Void,List<Player>> {
     private SwipeRefreshLayout mRefresh;
-    private PlayersTopListAdapter mAdapter;
-    private Osudb osuDb;
-    public PlayersTopTask(Context context, PlayersTopListAdapter adapter, SwipeRefreshLayout refresh) {
-        osuDb = new Osudb(context);
+    private ArrayAdapter<Player> mAdapter;
+    public PlayersTopTask(ArrayAdapter<Player> adapter, SwipeRefreshLayout refresh) {
        mAdapter = adapter;
        mRefresh = refresh;
     }
+    public PlayersTopTask(ArrayAdapter<Player> adapter){
+        mAdapter = adapter;
+    }
 
     @Override
-    protected List<Player> doInBackground(String... strings) {
-        String url = strings[0];
+    protected List<Player> doInBackground(String... urls) {
         try {
-            Document doc = Jsoup.connect(url).get();
-            Elements tbody = doc.select("tbody").first().children();
+            Document page = Jsoup.connect(urls[0]).get();
+            Elements tbody = page.select("tbody").first().children();
+            Osudb db = Osudb.getInstance();
             ArrayList<Player> players = new ArrayList<>();
-            for(int i = 0; i < tbody.size();i++){
-                Element tr = tbody.get(i);
+            for(Element tr : tbody){
                 Player player = PlayerParser.parsePlayer(tr);
-                HashMap<String, PlayerDataEntry> compare = osuDb.compare(player);
-                player.difference = compare;
-                //K
-                osuDb.insertPlayer(player);
-                if(!compare.isEmpty() && compare.get(Columns.PP) != null)
+                player.difference = db.compare(player);
+                db.insertOrUpdate(player);
+                if(player.hasPerformanceChanged())
                     players.add(0,player);
                 else
                     players.add(player);
             }
             return players;
-        } catch (IOException e) {
+        } catch (IOException | InstantiationException e) {
             e.printStackTrace();
         }
         return null;
     }
+
 
 
 
@@ -62,6 +61,9 @@ class PlayersTopTask extends AsyncTask<String,Void,List<Player>> {
             mAdapter.clear();
             mAdapter.addAll(players);
             mRefresh.setRefreshing(false);
+        }
+        else if(mAdapter != null){
+            mAdapter.addAll(players);
         }
         super.onPostExecute(players);
     }

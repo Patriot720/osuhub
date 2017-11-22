@@ -77,4 +77,8 @@ public class Player {
     public int getId() {
         return id;
     }
+
+    public boolean hasPerformanceChanged() {
+        return difference != null && !difference.isEmpty() && difference.get(Columns.PP) != null;
+    }
 }

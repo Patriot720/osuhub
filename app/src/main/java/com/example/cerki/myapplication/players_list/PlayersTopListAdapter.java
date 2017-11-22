@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.cerki.myapplication.R;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -87,7 +88,8 @@ class PlayersTopListAdapter extends ArrayAdapter<Player> {
             Bitmap bitmap = BitmapFactory.decodeStream(open);
             destination.setImageBitmap(bitmap);
         } catch (IOException e) {
-            e.printStackTrace();
+            if (!(e instanceof FileNotFoundException))
+                e.printStackTrace();
         }
     }
 

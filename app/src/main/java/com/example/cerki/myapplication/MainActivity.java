@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.cerki.myapplication.db.Osudb;
 import com.example.cerki.myapplication.players_list.PlayersTopFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        initializeDatabase();
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -45,6 +47,10 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void initializeDatabase() {
+        Osudb.getInstance(this);
     }
 
     @Override
@@ -85,12 +91,12 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         Fragment fragment = null;
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_feed) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_top_list) {
             fragment = new PlayersTopFragment();
             FloatingActionButton fab = findViewById(R.id.fab);
             fab.hide();
