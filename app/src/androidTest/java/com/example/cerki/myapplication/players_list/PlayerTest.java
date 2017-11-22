@@ -41,7 +41,6 @@ public class PlayerTest {
     @Test
     public void generateContentValues() throws Exception {
         ContentValues values = mPlayer.generateContentValues();
-        assertEquals(7,values.size());
         assertEquals(1000,  values.get("pp"));
         assertEquals(1000,  values.get("acc"));
         assertEquals(1000,  values.get("rank"));

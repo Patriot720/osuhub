@@ -1,10 +1,14 @@
 package com.example.cerki.myapplication.players_list;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,7 +71,19 @@ class PlayersTopListAdapter extends ArrayAdapter<Player> {
             }
             if (rank != null){
                 rank.setText(p.get(Columns.RANK));
+                int val = p.getDataEntry(Columns.RANK).getIntVal();
+                Resources resources = getContext().getResources();
+                if(val == 1)
+                    convertView.setBackgroundColor(resources.getColor(R.color.top1));
+                else if (val <= 10)
+                    convertView.setBackgroundColor(resources.getColor(R.color.top10));
+                else
+                    convertView.setBackgroundColor(resources.getColor(R.color.list_item));
             }
+            if(p.get(Columns.ACTIVITY).equals(Player.INACTIVE))
+                convertView.setAlpha((float) 0.5);
+            else
+                convertView.setAlpha(1);
            if(p.difference != null) {
                PlayerDataEntry pp_diff = p.difference.get("pp");
                PlayerDataEntry acc_diff = p.difference.get("acc");

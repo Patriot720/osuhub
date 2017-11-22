@@ -6,4 +6,7 @@
     <color name="textColor">#AAA</color>
     <color name="textColorHighlight">#FFF</color>
     <color name="usernameColor">#9ef</color>
+    <color name="list_item">#444</color>
+    <color name="top10">#4b4b1b</color>
+    <color name="top1">#002266</color>
 </resources>

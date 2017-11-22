@@ -9,6 +9,8 @@ import java.util.Set;
 
 
 public class Player {
+    public static final String ACTIVE = "active";
+    public static final String INACTIVE ="inactive" ;
     private int id;
     public final PlayerData data;
     public HashMap<String,PlayerDataEntry> difference;
@@ -25,11 +27,15 @@ public class Player {
         return contentValues;
     }
     public Player(Cursor query) {
-        this(query.getInt(0));
+        this(query.getInt(query.getColumnIndex(Columns.ID)));
         int columnCount = query.getColumnCount();
-        set("username",query.getString(1));
-        set("country",query.getString(2));
-        for(int i = 3; i < columnCount;i++){
+        int comparable_border_id = query.getColumnIndex(Columns.PP);
+        for(int i = 1; i < comparable_border_id;i++){
+            String columnName = query.getColumnName(i);
+            String value = query.getString(i);
+            set(columnName,value);
+        }
+        for(int i = comparable_border_id;i < columnCount;i++){
             String columnName = query.getColumnName(i);
             double value = query.getDouble(i);
             this.set(columnName, new PlayerDataEntry(value));

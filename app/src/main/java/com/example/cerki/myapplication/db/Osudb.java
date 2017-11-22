@@ -25,6 +25,7 @@ public class Osudb extends SQLiteOpenHelper{
             + Columns.ID + " NUMBER PRIMARY KEY,"
             + Columns.USERNAME + " TEXT,"
             + Columns.COUNTRY + " TEXT,"
+            + Columns.ACTIVITY + " TEXT,"
             + Columns.PP + " NUMBER,"
             + Columns.PC + " NUMBER,"
             + Columns.ACC +  " FLOAT,"

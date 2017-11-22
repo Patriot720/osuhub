@@ -7,6 +7,12 @@ public class PlayerParser {
     static public Player parsePlayer(Element tr){
             if(tr == null)
                 return null;
+            int isActive =  tr.classNames().toString().indexOf("inactive");
+            String activity;
+            if(isActive == -1)
+                activity = Player.ACTIVE;
+            else
+                activity = Player.INACTIVE;
             String user_id = tr.select(".ranking-page-table__user-link").attr("href");
             Player p = new Player(user_id);
             String username = tr.select("span").text();
@@ -26,6 +32,7 @@ public class PlayerParser {
            p.set(Columns.RANK,new PlayerDataEntry('-' + rank.substring(1)));
            p.set(Columns.USERNAME,username);
            p.set(Columns.COUNTRY,country);
+           p.set(Columns.ACTIVITY,activity);
            return p;
     }
 }

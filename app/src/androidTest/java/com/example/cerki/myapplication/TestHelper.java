@@ -1,5 +1,6 @@
 package com.example.cerki.myapplication;
 
+import com.example.cerki.myapplication.players_list.Columns;
 import com.example.cerki.myapplication.players_list.Player;
 import com.example.cerki.myapplication.players_list.PlayerDataEntry;
 
@@ -10,6 +11,7 @@ public class TestHelper {
         Player player = new Player(1);
         player.set("username","username");
         player.set("country","country");
+        player.set("activity",Player.ACTIVE);
         player.set("pp",new PlayerDataEntry(1000 * multiplier));
         player.set("pc",new PlayerDataEntry(1000 * multiplier));
         player.set("acc",new PlayerDataEntry(1000 * multiplier));
@@ -28,6 +30,7 @@ public class TestHelper {
         assertEquals(1000 * multiplier,p.getDataEntry("rank").getIntVal());
         assertEquals("username",p.get("username"));
         assertEquals("country",p.get("country"));
+        assertEquals(Player.ACTIVE,p.get(Columns.ACTIVITY));
     }
 
 }
