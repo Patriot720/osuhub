@@ -16,8 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.cerki.myapplication.db.Osudb;
-import com.example.cerki.myapplication.players_list.PlayersTopFragment;
+import com.example.cerki.myapplication.PlayersList.ListFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -97,7 +96,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_slideshow) {
         } else if (id == R.id.nav_top_list) {
-            fragment = new PlayersTopFragment();
+            fragment = new ListFragment();
             FloatingActionButton fab = findViewById(R.id.fab);
             fab.hide();
         } else if (id == R.id.nav_share) {

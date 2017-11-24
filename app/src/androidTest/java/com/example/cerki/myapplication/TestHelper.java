@@ -1,8 +1,8 @@
 package com.example.cerki.myapplication;
 
-import com.example.cerki.myapplication.players_list.Columns;
-import com.example.cerki.myapplication.players_list.Player;
-import com.example.cerki.myapplication.players_list.PlayerDataEntry;
+import com.example.cerki.myapplication.Player.Columns;
+import com.example.cerki.myapplication.Player.Player;
+import com.example.cerki.myapplication.Player.DataEntry;
 
 import static org.junit.Assert.*;
 
@@ -12,10 +12,10 @@ public class TestHelper {
         player.set("username","username");
         player.set("country","country");
         player.set("activity",Player.ACTIVE);
-        player.set("pp",new PlayerDataEntry(1000 * multiplier));
-        player.set("pc",new PlayerDataEntry(1000 * multiplier));
-        player.set("acc",new PlayerDataEntry(1000 * multiplier));
-        player.set("rank",new PlayerDataEntry(1000 * multiplier));
+        player.set("pp",new DataEntry(1000 * multiplier));
+        player.set("pc",new DataEntry(1000 * multiplier));
+        player.set("acc",new DataEntry(1000 * multiplier));
+        player.set("rank",new DataEntry(1000 * multiplier));
         return player;
     }
     public static Player getFakePlayer(){

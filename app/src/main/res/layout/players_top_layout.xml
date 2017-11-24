@@ -1,60 +1,23 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/top_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#333"
-    tools:context="com.example.cerki.myapplication.players_list.PlayersTopFragment"
-    >
+    tools:context="com.example.cerki.myapplication.PlayersList.ListFragment">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
+    <ProgressBar
+        android:id="@+id/listProgressBar"
+        style="@android:style/Widget.DeviceDefault.ProgressBar.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="156dp"
+        android:layout_marginStart="156dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:layout_width="40dp"
-            android:layout_height="14dp"
-            android:text="@string/rank_title"
-            android:textAlignment="center"
-            android:textColor="@color/textColorHighlight"
-            android:textSize="12sp" />
-
-        <TextView
-            android:layout_width="120dp"
-            android:layout_height="14dp"
-            android:text="@string/username_title"
-            android:textAlignment="center"
-            android:textColor="@color/textColor"
-            android:textSize="12sp" />
-
-        <TextView
-            android:layout_width="65dp"
-            android:layout_height="14dp"
-            android:text="@string/pp_title"
-            android:textAlignment="center"
-            android:textColor="@color/textColorHighlight"
-            android:textSize="12sp" />
-
-        <TextView
-            android:layout_width="65dp"
-            android:layout_height="14dp"
-            android:text="@string/acc_title"
-            android:textAlignment="center"
-            android:textColor="@color/textColor"
-            android:textSize="12sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="14dp"
-            android:text="@string/pc_title"
-            android:textAlignment="center"
-            android:textColor="@color/textColor"
-            android:textSize="12sp" />
-
-    </LinearLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/players_top_refresh"
@@ -66,45 +29,10 @@
         <ListView
             android:id="@+id/players_top"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></ListView>
+            android:layout_height="match_parent"
+            android:focusable="false"
+            android:visibility="gone" />
+
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
-
-        <View
-            android:layout_width="40dp"
-            android:layout_height="match_parent" />
-
-        <View
-            android:layout_width="120dp"
-            android:layout_height="match_parent"
-            android:alpha="0.25"
-            android:background="#77687a"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp" />
-
-        <View
-            android:layout_width="65dp"
-            android:layout_height="match_parent" />
-
-        <View
-            android:layout_width="65dp"
-            android:layout_height="match_parent"
-            android:alpha=".25"
-            android:background="#77687a"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0.25"
-            android:background="#77687a" />
-    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

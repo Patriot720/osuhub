@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/rect"
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:orientation="horizontal">
@@ -51,14 +50,7 @@
             app:layout_constraintStart_toEndOf="@+id/item_acc"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/item_hash"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/item_rank"
-            android:text="#"
-            android:textColor="@color/textColorHighlight" />
+
 
     </RelativeLayout>
 
