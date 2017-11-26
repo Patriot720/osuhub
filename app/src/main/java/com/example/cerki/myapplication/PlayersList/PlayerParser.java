@@ -7,8 +7,8 @@ import com.example.cerki.myapplication.Player.DataEntry;
 import org.jsoup.nodes.Element;
 
 
-class PlayerParser {
-    static Player parsePlayer(Element tr){
+public class PlayerParser {
+    public static Player parsePlayer(Element tr){
             if(tr == null)
                 return null;
             int isActive =  tr.classNames().toString().indexOf("inactive");

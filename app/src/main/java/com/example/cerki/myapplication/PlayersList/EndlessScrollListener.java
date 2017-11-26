@@ -1,14 +1,10 @@
 package com.example.cerki.myapplication.PlayersList;
 
-import android.view.animation.Animation;
 import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.ProgressBar;
 
-import com.example.cerki.myapplication.Player.Player;
-
-import java.util.List;
+import com.example.cerki.myapplication.PlayersList.Tasks.ListTask;
+import com.example.cerki.myapplication.PlayersList.Tasks.TaskListeners.ListTaskListener;
+import com.example.cerki.myapplication.PlayersList.Tasks.TaskListeners.WorkDoneListener;
 
 
 public class EndlessScrollListener implements AbsListView.OnScrollListener {
@@ -16,16 +12,16 @@ public class EndlessScrollListener implements AbsListView.OnScrollListener {
     private int visibleThreshold = 5;
     private int previousTotal = 2;
     private boolean loading = true;
-    private ListView mListView;
-    private ListAdapter mAdapter;
+    private WorkDoneListener workDoneListener;
 
-    public EndlessScrollListener(ListView listView,ListAdapter adapter) {
-        mListView = listView;
-        mAdapter = adapter;
+    public EndlessScrollListener(ListTaskListener task){
+            workDoneListener = task;
     }
     public EndlessScrollListener(int visibleThreshold) {
         this.visibleThreshold = visibleThreshold;
     }
+
+
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem,
@@ -38,9 +34,7 @@ public class EndlessScrollListener implements AbsListView.OnScrollListener {
             }
         }
         if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
-            // I load the next page of gigs using a background task,
-            // but you can call any function here.
-            new ListTask(mAdapter).execute(ListFragment.REQUEST_URL + "?page="+ currentPage);
+            new ListTask(workDoneListener).loadPlayersFromPage(currentPage);
             loading = true;
         }
     }

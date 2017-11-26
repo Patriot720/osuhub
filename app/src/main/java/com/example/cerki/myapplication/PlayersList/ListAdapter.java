@@ -54,7 +54,7 @@ class ListAdapter extends ArrayAdapter<Player> {
             ImageView pc_arrow = convertView.findViewById(R.id.item_pc_arrow);
             ImageView country = convertView.findViewById(R.id.item_country_image);
             if(country != null){
-                setAsset(country,p.get(Columns.COUNTRY));
+                setImage(country,p.get(Columns.COUNTRY));
             }
             if (username != null){
                 username.setText(p.get(Columns.USERNAME));
@@ -69,7 +69,7 @@ class ListAdapter extends ArrayAdapter<Player> {
                 acc.setText(p.get(Columns.ACC));
             }
             if (rank != null){
-                rank.setText("#" + p.get(Columns.RANK));
+                rank.setText(String.format("#%s", p.get(Columns.RANK)));
                 int val = p.getDataEntry(Columns.RANK).getIntVal();
                 setSpecialColorsForTop10Players(rank,val);
             }
@@ -82,14 +82,15 @@ class ListAdapter extends ArrayAdapter<Player> {
                DataEntry acc_diff = p.difference.get("acc");
                DataEntry rank_diff = p.difference.get("rank");
                DataEntry pc_diff = p.difference.get("pc");
-              setDiff(pp_diff_view,pp_arrow,pp_diff);
-              setDiff(acc_diff_view,acc_arrow,acc_diff);
-              setDiff(rank_diff_view,rank_arrow,rank_diff);
-              setDiff(pc_diff_view,pc_arrow,pc_diff);
+              setDifference(pp_diff_view,pp_arrow,pp_diff);
+              setDifference(acc_diff_view,acc_arrow,acc_diff);
+              setDifference(rank_diff_view,rank_arrow,rank_diff);
+              setDifference(pc_diff_view,pc_arrow,pc_diff);
            }
         }
         return convertView;
     }
+
 
 
 
@@ -103,7 +104,7 @@ class ListAdapter extends ArrayAdapter<Player> {
                     rankView.setTextColor(resources.getColor(R.color.white));
     }
 
-    private void setAsset(ImageView destination, String source) {
+    private void setImage(ImageView destination, String source) {
         try {
             InputStream open = getContext().getAssets().open(source);
             Bitmap bitmap = BitmapFactory.decodeStream(open);
@@ -114,7 +115,7 @@ class ListAdapter extends ArrayAdapter<Player> {
         }
     }
 
-    void setDiff(TextView m, ImageView arrow, DataEntry i) {
+    void setDifference(TextView m, ImageView arrow, DataEntry i) {
         if(i == null) {
             if(m !=null)
             m.setVisibility(View.INVISIBLE);
